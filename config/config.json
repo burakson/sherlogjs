@@ -1,0 +1,19 @@
+{
+  "site_title"     : "Sherlog.js Dashboard",
+  "node_server"    : {
+    "host"       : "localhost",
+    "port"       : "3000"
+  },
+  "server_url"     : "localhost:3000",
+  "database": {
+    "host"         : "localhost",
+    "db_name"      : "test",
+    "username"     : "root",
+    "password"     : "root"  
+  },
+  "timeout"        : 3000,
+  "whitelist"      : [
+    "localhost",
+    "mydomain.com"
+  ]
+}

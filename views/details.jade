@@ -1,0 +1,25 @@
+extends layout
+
+block content
+  #content
+    .tracking-details
+      .row
+        .col-md-6
+          h4= "Tracking Details"
+          table.table.table-bordered
+            tbody
+              tr
+                td(width="40%")
+                  = "Data"
+                td= item.tracking_data
+              tr
+                td= "Environment"
+                td= item.environment
+              tr
+                td= "Referrer domain"
+                td
+                  a(href="#{item.referrer}", target="_blank")
+                    = item.referrer
+              tr
+                td= "User Agent"
+                td= item.user_agent

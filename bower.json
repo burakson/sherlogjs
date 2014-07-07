@@ -1,0 +1,10 @@
+{
+  "name": "Sherlog.js",
+  "version": "0.1.0",
+  "dependencies": {
+    "jquery"                       : "~2.1.1",
+    "bootstrap-sass-twbs"          : "~3.1.1",
+    "datatables"                   : "~1.10.0",
+    "datatables-bootstrap3"        : "0.1"
+  }
+}

@@ -1,0 +1,27 @@
+extends layout
+
+block content
+  #content
+    .stats
+      table.table.table-striped.table-bordered.table-hover.data-table
+        thead
+          tr
+            th.text-center.no-sorting Type
+            th.no-sorting Event/Error Information
+            th.text-center Occurrence
+            th.text-center Environment
+            th.text-right.date-header Last Occurence Date
+        tbody
+          each item in data
+            tr(class="type-#{ item.type }")
+              td(class="vcenter text-center icon")
+                span(class="glyphicon #{item.type === 'error' ? 'glyphicon-warning-sign' : 'glyphicon-pushpin'}")
+              td(class="tracking-data")
+                a(href="dashboard/details/#{item.id}")
+                  = item.tracking_data
+              td(class="text-center occurence-count")
+                = item.occurence
+              td(class="text-center environment")
+                = item.environment
+              td(class="text-right date")
+                = item.date

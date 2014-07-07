@@ -1,0 +1,13 @@
+if route
+  #header
+    a.site-title(href="/dashboard")= settings.site_title
+    h4 Tracking Reports
+
+  #navigation
+    .btn-group
+      a(href="/dashboard", class="btn #{ route === 'all' ? 'btn-primary' : 'btn-default' }")
+        = "All"
+      a(href="/dashboard/events", class="btn #{ route === 'events' ? 'btn-primary' : 'btn-default' }")
+        = "Events"
+      a(href="/dashboard/errors", class="btn #{ route === 'errors' ? 'btn-primary' : 'btn-default' } btn-default")
+        = "Errors"

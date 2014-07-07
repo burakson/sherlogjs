@@ -1,0 +1,23 @@
+extends layout
+
+block content
+  #content
+    .stats
+      table.table.table-striped.table-bordered.table-hover.data-table
+        thead
+          tr
+            th.no-sorting Event Information
+            th.text-center Environment
+            th.text-center Referrer
+            th.text-right.date-header Date
+        tbody
+          each item in data
+            tr
+              td
+                a(href="details/#{item.id}")
+                  = item.tracking_data
+              td.text-center= item.environment
+              td.text-center
+                a(href="#{item.referrer}", target="_blank")
+                  = item.referrer
+              td.text-right= item.date

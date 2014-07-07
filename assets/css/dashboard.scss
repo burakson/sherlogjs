@@ -1,0 +1,115 @@
+$icon-font-path:  "/bower_components/bootstrap-sass-twbs/vendor/assets/fonts/bootstrap/";
+@import           "../../bower_components/bootstrap-sass-twbs/vendor/assets/stylesheets/bootstrap.scss";
+
+%HelveticaNeueLight {
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, sans-serif;
+  font-weight: 300;
+}
+
+body {
+  padding: 20px 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  @extend %HelveticaNeueLight;
+}
+
+#header {
+  display: inline-block;
+  .site-title {
+    display: inline-block;
+    margin: 20px 0 0;
+    color: inherit;
+    font-size: 36px;
+    @extend %HelveticaNeueLight;
+  }
+  h4 {
+    margin: 0;
+  }
+}
+
+#navigation {
+  float: right;
+  margin-top: 40px;
+}
+
+#content {
+  margin-top: 2em;
+}
+
+.stats {
+  th {
+    @extend %HelveticaNeueLight;
+    &.date-header {
+      padding-right: 20px;
+    }
+  }
+  tr.type-error {
+    .icon {
+      color: rgb(203, 110, 110);
+    }
+  }
+  tr.type-event {
+    .icon {
+      color: rgb(119, 119, 184);
+    }
+  }
+  th, td {
+    font-size: .9em;
+    &.vcenter {
+      vertical-align: middle;
+    }
+  }
+}
+
+.dataTables_info {
+  font-weight: normal !important;
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+.dataTables_paginate {
+  @extend %HelveticaNeueLight;
+  ul li {
+    cursor: pointer;
+  }
+}
+
+.tracking-details {
+  table {
+    font-size: .9em;
+  }
+}
+
+// footer
+#footer {
+  margin-top: 50px;
+  a {
+    color: #999;
+    .copyright-text {
+      font-size: .8em;
+      line-height: 2em;
+      vertical-align: top;
+      display: inline-block;
+      padding-right: 0.3em;
+    }
+    .github-logo path {
+      fill: #999;
+    }
+    &:hover {
+      .copyright-text {
+        color: #000;
+      }
+      .github-logo path {
+        fill: #000;
+      }
+    }
+  }
+}
+
+#error-page {
+  @extend %HelveticaNeueLight;
+  text-align: center;
+  padding: 5em 0;
+  font-size: 2em;
+}
