@@ -18,7 +18,7 @@
       this.type = type;
       this.environment = environment;
       if (this.type === 1 && typeof data !== 'object') {
-        data : {
+        this.data = {
           _event : data
         }
       } else {
