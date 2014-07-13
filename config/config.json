@@ -11,7 +11,7 @@
     "username"     : "root",
     "password"     : "root"  
   },
-  "timeout"        : 3000,
+  "response_timeout" : 3000,
   "whitelist"      : [
     "localhost",
     "mydomain.com"

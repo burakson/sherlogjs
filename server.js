@@ -45,7 +45,7 @@ fs.exists('public/js/sherlog.min.js', function (exists) {
 // express setup
 app.set('view engine', 'jade');
 app.use(bodyParser());
-app.use(timeout(config.timeout));
+app.use(timeout(config.response_timeout));
 app.use(express.static(__dirname + '/public'));
 app.use('/bower_components', express.static(__dirname + '/bower_components'));
 app.set('site_title', config.site_title);
