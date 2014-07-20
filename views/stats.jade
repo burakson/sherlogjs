@@ -6,18 +6,22 @@ block content
       table.table.table-striped.table-bordered.table-hover.data-table
         thead
           tr
-            th.no-sorting Event Information
+            th.text-center.no-sorting Type
+            th.no-sorting Event/Error Information
+            th.text-center Occurrence
             th.text-center Environment
-            th.text-center Referrer
-            th.text-right.date-header Date
+            th.text-right.date-header Last Occurence Date
         tbody
           each item in data
-            tr
-              td
-                a(href="details/#{item.id}")
-                  = item.tracking_data
-              td.text-center= item.environment
-              td.text-center
-                a(href="#{item.referrer}", target="_blank")
-                  = item.referrer
-              td.text-right= item.date
+            tr(class="type-#{ item.type }")
+              td(class="vcenter text-center icon")
+                span(class="glyphicon #{item.type === 'error' ? 'glyphicon-warning-sign' : 'glyphicon-pushpin'}")
+              td(class="tracking-data")
+                a(href="/dashboard/details/#{item.id}")
+                  = item._id.tracking_data
+              td(class="text-center occurence-count")
+                = item.occurence
+              td(class="text-center environment")
+                = item._id.environment
+              td(class="text-right date")
+                = item.date

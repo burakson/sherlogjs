@@ -1,5 +1,7 @@
-var _     = require('underscore');
-    _.str = require('underscore.string');
+var _         = require('underscore')
+  , constants = require('./constants');
+
+_.str = require('underscore.string');
 
 /**
  * Responds a binary file (image)
@@ -59,11 +61,16 @@ exports.stringify = function(obj) {
  * @param   data        obj
  * @return  array
  */
- exports.aggregate = function() {
-  return [{
-    $sort: { created_at : 1 }},
-    {
-      $group: {
+ exports.aggregate = function(type) {
+  var agg     = [];
+  var matcher = { $match: { 'type': type } };
+
+  if (type !== constants.tracking_types['all']) {
+    agg.push(matcher);
+  }
+
+  agg.push({ $sort: { created_at : 1 }},
+    { $group: {
         _id: {
           tracking_data   : '$tracking_data',
           environment     : '$environment'
@@ -73,30 +80,21 @@ exports.stringify = function(obj) {
         created_at  : { $last: '$created_at' },
         occurence   : { $sum: 1 }
       }
-    }
-  ];
+    })
+
+  return agg;
  }
 
 /**
  * Generic stats formatter for presentational reasons
  *
- * @param   res         obj
  * @param   data        obj
  * @return  array
  */
-exports.formatStats = function(res, data) {
-  var stats  = [];
-  _.each(data, _.bind(function (item) {
-    var tracking_data, clone, tracking_data;
-    var objToClone       = item.toObject ? item.toObject() : item;
-    clone                = _.extend({}, objToClone);
-    tracking_data        = clone.tracking_data   || clone._id.tracking_data;
-    clone.tracking_data  = tracking_data.message || this.stringify(tracking_data);
-    clone.environment    = clone.environment     || clone._id.environment;
-    clone.id             = clone.id || clone._id;
-    clone.date           = this.formatDate(clone.created_at);
-    clone.type           = clone.type == 0 ? 'error' : 'event';
-    stats.push(clone);
+exports.formatStats = function(data) {
+  return _.each(data, _.bind(function (item) {
+    item._id.tracking_data  = item._id.tracking_data.message || this.stringify(item._id.tracking_data);
+    item.date = this.formatDate(item.created_at);
+    item.type = _.invert(constants.tracking_types)[item.type];
   }, this));
-  return stats;
 };
