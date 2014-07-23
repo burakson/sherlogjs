@@ -1,3 +1,12 @@
+module.exports.login = function (req, res) {
+  res.render('login');
+}
+
+module.exports.logout = function (req, res) {
+  req.logout();
+  res.redirect('/');
+}
+
 module.exports.index = function(req, res) {
   res.redirect('/dashboard');
 };

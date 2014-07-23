@@ -1,13 +1,15 @@
 doctype html5
 html
   head
-    title= settings.site_title
+    title= site_title
     meta(charset="utf-8")
     meta(name="viewport", content="width=device-width, initial-scale=1")
     link(rel="stylesheet", href="/css/dashboard.min.css")
     link(rel="stylesheet", href="/bower_components/datatables-bootstrap3/BS3/assets/css/datatables.css")
 
   body
+    if isAuthenticated
+      include _navbar
     .container
       include _header
 

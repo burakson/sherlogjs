@@ -1,0 +1,15 @@
+.navbar.navbar-default.navbar-static-top(role="navigation")
+  .container
+    .navbar-header
+      button(data-target=".nav-collapse", data-toggle="collapse", class="navbar-toggle", type="button")
+        span.sr-only
+          = "Toggle navigation"
+        span.icon-bar
+        span.icon-bar
+        span.icon-bar
+
+    .navbar-collapse.collapse
+      ul.nav.navbar-nav.navbar-right
+        li
+          a(href="/logout")
+            = "Logout"

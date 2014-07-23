@@ -1,6 +1,6 @@
-if route
+if isAuthenticated && route
   #header
-    a.site-title(href="/dashboard")= settings.site_title
+    a.site-title(href="/dashboard")= site_title
     h4 Tracking Reports
 
   #navigation

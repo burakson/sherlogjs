@@ -6,16 +6,20 @@
  * http://github.com/burakson/sherlogjs/LICENSE.md
  */
 
-var config      = require('./config/config.json')
-  , fs          = require('fs')
-  , http        = require('http')
-  , express     = require('express')
-  , mongoose    = require('mongoose')
-  , bodyParser  = require('body-parser')
-  , timeout     = require('connect-timeout')
-  , colors      = require('colors')
-  , routes      = require('./app/routes/routes')
-  , app         = express();
+var config       = require('./config/config.json')
+  , fs           = require('fs')
+  , http         = require('http')
+  , express      = require('express')
+  , session      = require('express-session')
+  , passport     = require('passport')
+  , cookieParser = require('cookie-parser')
+  , Strategy     = require('passport-local').Strategy
+  , mongoose     = require('mongoose')
+  , bodyParser   = require('body-parser')
+  , timeout      = require('connect-timeout')
+  , colors       = require('colors')
+  , routes       = require('./app/routes/routes')
+  , app          = express();
 
 
 var db = mongoose.connect(
@@ -29,7 +33,7 @@ var db = mongoose.connect(
 // ensure that bower packages are installed
 fs.exists('bower_components', function (exists) { 
   if (!exists) { 
-    console.log('Bower packages are not installed. Please run `bower install`'.red);
+    console.log('Bower packages are missing. Please run `bower install`'.red);
     process.exit(1);
   } 
 }); 
@@ -37,26 +41,59 @@ fs.exists('bower_components', function (exists) {
 // ensure that the required gulp task is completed
 fs.exists('public/js/sherlog.min.js', function (exists) { 
   if (!exists) { 
-    console.log('Assets seem to be not compiled. Please run `gulp`'.red);
+    console.log('Assets are missing. Please run `gulp`'.red);
     process.exit(1);
   } 
-}); 
+});
+
+passport.serializeUser(function (user, done) {
+  done(null, user);
+});
+
+passport.deserializeUser(function (user, done) {
+  done(null, user);
+});
+
+passport.use( new Strategy(function (username, password, done) {
+  var hasAccess = username == config.credentials.username &&
+                  password == config.credentials.password;
+
+  done(null, hasAccess);
+}));
+
+var isAuthenticated = function(req, res, next) {
+  if (req.isAuthenticated()) return next();
+  res.redirect('/login');
+};
 
 // express setup
-app.set('view engine', 'jade');
 app.use(bodyParser());
+app.use(cookieParser());
+app.use(session({ secret: __dirname.replace(/[\/]/g, ''), saveUninitialized: true, resave: true }));
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(timeout(config.response_timeout));
 app.use(express.static(__dirname + '/public'));
 app.use('/bower_components', express.static(__dirname + '/bower_components'));
-app.set('site_title', config.site_title);
+app.set('view engine', 'jade');
 app.set('views', __dirname + '/views');
+app.set('showStackError', true);
+
+app.use(function (req, res, next){
+  res.locals.site_title = config.site_title;
+  res.locals.isAuthenticated = req.isAuthenticated();
+  next();
+});
 
 // routes
-app.get('/',                          routes.index);
-app.get('/dashboard',                 routes.dashboard);
-app.get('/dashboard/:type',           routes.dashboard);
-app.get('/dashboard/details/:id',     routes.details);
+app.get('/',                          isAuthenticated, routes.index);
+app.get('/login',                     routes.login);
+app.get('/logout',                    routes.logout);
+app.get('/dashboard',                 isAuthenticated, routes.dashboard);
+app.get('/dashboard/:type',           isAuthenticated, routes.dashboard);
+app.get('/dashboard/details/:id',     isAuthenticated, routes.details);
 app.get('/t.gif',                     routes.tracker);
+app.post('/login',                    passport.authenticate('local', { successRedirect : '/', failureRedirect : '/login' }));
 app.all('*',                          routes.notfound);
 
 app.listen( config.node_server.port, config.node_server.host, '', function() {

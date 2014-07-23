@@ -1,8 +1,12 @@
 {
   "site_title"     : "Sherlog.js Dashboard",
   "node_server"    : {
-    "host"       : "localhost",
-    "port"       : "3000"
+    "host"  : "localhost",
+    "port"  : "3000"
+  },
+  "credentials"    : {
+    "username"  : "admin",
+    "password"  : "dashboard"
   },
   "server_url"     : "localhost:3000",
   "database": {
