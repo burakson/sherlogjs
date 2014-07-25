@@ -1,27 +1,47 @@
-$(function() {
+(function($) {
   var dashboard = {
     init: function() {
-      this.dataTable = $('.data-table');
-      if (this.dataTable.length < 1) return;
-      this.setupDataTable();
+      this.dataTables = $('.data-table');
+      if (this.dataTables.length < 1) return;
+      this.setupDataTables();
     },
-    sort: function() {
+    sort: function(table) {
       var r = [];
-      this.dataTable.find('th').each(function(){
+      $(table).find('th').each(function(){
         r.push({ 'bSortable':  ! $(this).hasClass('no-sorting') });
       });
       return r;
     },
-    setupDataTable: function() {
-      var columnCount     = this.dataTable.find('th').length;
-      var sortableColumns = this.sort();
+    setupDataTables: function() {
+      $.each( this.dataTables, $.proxy(function (i, table) {
+        var isHistory       = $(table).hasClass('data-table-history');
 
-      this.dataTable.dataTable({
-        "sPaginationType": "bs_full",
-        "bLengthChange": false,
-        "bAutoWidth": false,
-        "aoColumns": sortableColumns,
-        "aaSorting": [[ columnCount - 1, "desc" ]],
+        if ( isHistory ) {
+          this.history(table);
+        } else {
+          this.stats(table);
+        }
+      },this));
+    },
+    history: function(table) {
+      var sortableColumns = this.sort(table);
+      $(table).dataTable({
+        sPaginationType: "bs_full",
+        bLengthChange: false,
+        bAutoWidth: false,
+        bFilter: false,
+        bInfo: false,
+      });
+    },
+    stats: function(table) {
+      var columnCount     = $(table).find('th').length;
+      var sortableColumns = this.sort(table);
+      $(table).dataTable({
+        sPaginationType: "bs_full",
+        bLengthChange: false,
+        bAutoWidth: false,
+        aoColumns: sortableColumns,
+        aaSorting: [[ columnCount - 1, "desc" ]],
         fnDrawCallback: function() {
           $('.dataTables_filter input').addClass('form-control input-sm');
         }
@@ -30,4 +50,4 @@ $(function() {
   }
 
   dashboard.init();
-});
+})(jQuery);

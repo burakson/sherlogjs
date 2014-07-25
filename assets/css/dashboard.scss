@@ -1,6 +1,9 @@
 $icon-font-path:  "/bower_components/bootstrap-sass-twbs/vendor/assets/fonts/bootstrap/";
 @import           "../../bower_components/bootstrap-sass-twbs/vendor/assets/stylesheets/bootstrap.scss";
 
+$error-color: rgb(203, 110, 110);
+$event-color: rgb(79, 142, 238);
+
 %HelveticaNeueLight {
   font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, sans-serif;
   font-weight: 300;
@@ -48,12 +51,12 @@ h1, h2, h3, h4, h5, h6 {
   }
   tr.type-error {
     .icon {
-      color: rgb(203, 110, 110);
+      color: $error-color;
     }
   }
   tr.type-event {
     .icon {
-      color: rgb(119, 119, 184);
+      color: $event-color;
     }
   }
   th, td {
@@ -72,6 +75,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .dataTables_paginate {
   @extend %HelveticaNeueLight;
+  font-size: .8em;
   ul li {
     cursor: pointer;
   }
@@ -80,6 +84,17 @@ h1, h2, h3, h4, h5, h6 {
 .tracking-details {
   table {
     font-size: .9em;
+  }
+  .tracking-data {
+    padding: 1em 1.5em 1.5em;
+    font-size: 2em;
+    font-family: 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, sans-serif;
+  }
+  &.error .tracking-data {
+    color: $error-color;
+  }
+  &.event .tracking-data {
+    color: $event-color;
   }
 }
 

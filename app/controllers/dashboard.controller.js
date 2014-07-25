@@ -1,6 +1,7 @@
 var Tracking      = require('../models/tracking')
-  , utils         = require('../utils')
-  , constants     = require('../constants');
+  , utils         = require('../common/utils')
+  , formatter     = require('../common/formatter')
+  , constants     = require('../common/constants');
 
 /**
  * Fetches data for dashboard interface
@@ -20,7 +21,7 @@ exports.stats = function (req, res) {
       if (err) return res.render('error');
       
       res.render('stats', {
-        data: utils.formatStats(result),
+        data: formatter.formatStats(result),
         route: statsType
       });
     }

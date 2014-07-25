@@ -1,5 +1,7 @@
 var Tracking      = require('../models/tracking')
-  , utils         = require('../utils');
+  , formatter     = require('../common/formatter')
+  , utils         = require('../common/utils')
+  , async         = require('async');
 
 /**
  * Tracking details
@@ -11,15 +13,27 @@ var Tracking      = require('../models/tracking')
 exports.details = function (req, res) {
   var id = req.params.id;
 
-  if(!id) return;
+  if(!id) return res.render('error');
 
-  Tracking.findOne({ _id : req.params.id }, function (err, result) {
-    if (err) return res.render('error');
-
-    result.tracking_data = utils.stringify(result.tracking_data);
-    res.render('details', {
-      item: result,
-      route: 'details'
-    });
+  var trackingData = {};
+  async.series({
+      item: function (callback) {
+        return Tracking.findOne({_id : id}, function (err, result) {
+          trackingData = result.tracking_data;
+          return callback(null, result);
+        });
+      },
+      history: function (callback) {
+        return Tracking.find({ tracking_data: trackingData }, 'created_at', function (err, results) {
+          return callback(null, results);
+        });
+      }
+    }, function (err, results){
+      if( err ) { res.render('error'); }
+      res.render('details', {
+        item: formatter.formatDetails(results.item),
+        history: formatter.formatHistory(results.history),
+        route: results.type === 0 ? 'errors' : 'events'
+      });
   });
 }

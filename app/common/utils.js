@@ -27,18 +27,6 @@ exports.isHostAuthorized = function(whitelist, host) {
 }
 
 /**
- * Converts date into more human readable format
- *
- * @param   date   obj
- * @return  string
- */
-exports.formatDate = function(date) {
-  if (typeof date !== 'object') return;
-  date = date.toString().split(' ');
-  return [date[2], date[1], date[3], date[4]].join(' ');
-};
-
-/**
  * Converts tracking data to string and adds comma after each pair
  *
  * @param   obj      obj
@@ -84,17 +72,3 @@ exports.stringify = function(obj) {
 
   return agg;
  }
-
-/**
- * Generic stats formatter for presentational reasons
- *
- * @param   data        obj
- * @return  array
- */
-exports.formatStats = function(data) {
-  return _.each(data, _.bind(function (item) {
-    item._id.tracking_data  = item._id.tracking_data.message || this.stringify(item._id.tracking_data);
-    item.date = this.formatDate(item.created_at);
-    item.type = _.invert(constants.tracking_types)[item.type];
-  }, this));
-};

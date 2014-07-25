@@ -3,7 +3,7 @@ extends layout
 block content
   #content
     .stats
-      table.table.table-striped.table-bordered.table-hover.data-table
+      table.table.table-striped.table-bordered.table-hover.data-table.data-table-stats
         thead
           tr
             th.text-center.no-sorting Type
@@ -18,10 +18,10 @@ block content
                 span(class="glyphicon #{item.type === 'error' ? 'glyphicon-warning-sign' : 'glyphicon-pushpin'}")
               td(class="tracking-data")
                 a(href="/dashboard/details/#{item.id}")
-                  = item._id.tracking_data
+                  = item.tracking_data
               td(class="text-center occurence-count")
                 = item.occurence
               td(class="text-center environment")
-                = item._id.environment
+                = item.environment
               td(class="text-right date")
                 = item.date

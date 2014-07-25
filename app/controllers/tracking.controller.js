@@ -1,6 +1,7 @@
 var config     = require('../../config/config.json')
   , Tracking   = require('../models/tracking')
-  , utils      = require('../utils');
+  , utils      = require('../common/utils')
+  , useragent  = require('useragent');
 
 /**
  * Saves the tracking data and responds to corresponding pixel (t.gif)
@@ -10,11 +11,11 @@ var config     = require('../../config/config.json')
  * @return  void
  */
 exports.tracking = function (req, res) {
-  var userAgent   = req.headers['user-agent'];
-  var referrer    = req.protocol + '://' + req.headers['host'];
+  var userAgent   = useragent.parse(req.headers['user-agent']).toJSON();
+  var referrer    = req.protocol + '://' + req.headers.host;
   var environment = req.param('e') === 'development' ? 'development' : 'production';
 
-  if (utils.isHostAuthorized(config.whitelist, req.host) < 0
+  if (utils.isHostAuthorized(config.whitelist, req.hostname) < 0
       || typeof req.param('t') === 'undefined'
       || typeof req.param('d') === 'unfedined') {
     utils.respondPixel(res);

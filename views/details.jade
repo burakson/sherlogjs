@@ -2,24 +2,45 @@ extends layout
 
 block content
   #content
-    .tracking-details
+    hr
+    div(class="tracking-details #{item.type}")
       .row
-        .col-md-6
-          h4= "Tracking Details"
+        .col-md-12.tracking-data
+          .item-title.text-center
+            span(class="glyphicon #{item.type === 'error' ? 'glyphicon-warning-sign' : 'glyphicon-pushpin'}")
+            span.data(style="margin-left: .5em; vertical-align: text-bottom;")
+              = item.title
+      .row
+        .col-md-8
+          h4= "Details"
           table.table.table-bordered
             tbody
+              if item.type === 'error'
+                tr
+                  td
+                    = "Error:"
+                  td= item.tracking_data.message
+                tr
+                  td= "Source:"
+                  td= item.tracking_data.source
+                tr
+                  td= "Line:"
+                  td= item.tracking_data.line
               tr
-                td(width="40%")
-                  = "Data"
-                td= item.tracking_data
-              tr
-                td= "Environment"
+                td= "Environment:"
                 td= item.environment
               tr
-                td= "Referrer domain"
+                td= "Referrer domain:"
                 td
                   a(href="#{item.referrer}", target="_blank")
                     = item.referrer
-              tr
-                td= "User Agent"
-                td= item.user_agent
+
+        .col-md-4
+          table.table.table-bordered.table-striped.data-table.data-table-history
+            thead
+              th= 'Occurence History'
+            tbody
+              each occurence in history
+                tr
+                  td
+                    = occurence.date
