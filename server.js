@@ -15,6 +15,7 @@ var config       = require('./config/config.json')
   , cookieParser = require('cookie-parser')
   , Strategy     = require('passport-local').Strategy
   , mongoose     = require('mongoose')
+  , mongoStore   = require('connect-mongo')(session)
   , bodyParser   = require('body-parser')
   , timeout      = require('connect-timeout')
   , colors       = require('colors')
@@ -64,12 +65,18 @@ passport.use( new Strategy(function (username, password, done) {
 var isAuthenticated = function(req, res, next) {
   if (req.isAuthenticated()) return next();
   res.redirect('/login');
-};
+};  
 
 // express setup
 app.use(bodyParser());
 app.use(cookieParser());
-app.use(session({ secret: __dirname.replace(/[\/]/g, ''), saveUninitialized: true, resave: true }));
+app.use(session({
+  secret: __dirname.replace(/[\/]/g, ''),
+  maxAge: new Date(Date.now() + 3600000),
+  store: new mongoStore({mongoose_connection: db}),
+  saveUninitialized: true,
+  resave: true
+}));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(timeout(config.response_timeout));
