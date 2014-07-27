@@ -1,9 +1,9 @@
-extends layout
+extends partials/layout
 
 block content
   #content
     hr
-    div(class="tracking-details #{item.type}")
+    div(id="page-details", class="#{item.type}")
       .row
         .col-md-12.tracking-data
           .item-title.text-center

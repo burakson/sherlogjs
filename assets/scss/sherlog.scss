@@ -1,11 +1,15 @@
-$icon-font-path:  "/bower_components/bootstrap-sass-twbs/vendor/assets/fonts/bootstrap/";
-@import           "../../bower_components/bootstrap-sass-twbs/vendor/assets/stylesheets/bootstrap.scss";
-
-$error-color: rgb(203, 110, 110);
-$event-color: rgb(79, 142, 238);
+@import "vars.scss";
+@import "stats.scss";
+@import "details.scss";
+@import "../../bower_components/bootstrap-sass-twbs/vendor/assets/stylesheets/bootstrap.scss";
 
 %HelveticaNeueLight {
   font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, sans-serif;
+  font-weight: 300;
+}
+
+%Lato {
+  font-family: 'Lato', sans-serif;
   font-weight: 300;
 }
 
@@ -20,16 +24,13 @@ h1, h2, h3, h4, h5, h6 {
     margin: 20px 0 0;
     color: inherit;
     font-size: 36px;
-    @extend %HelveticaNeueLight;
-  }
-  h4 {
-    margin: 0;
+    @extend %Lato;
   }
 }
 
 #navigation {
   float: right;
-  margin-top: 40px;
+  margin-top: 30px;
 }
 
 #content {
@@ -39,31 +40,6 @@ h1, h2, h3, h4, h5, h6 {
 .login {
   label {
     cursor: pointer;
-  }
-}
-
-.stats {
-  th {
-    @extend %HelveticaNeueLight;
-    &.date-header {
-      padding-right: 20px;
-    }
-  }
-  tr.type-error {
-    .icon {
-      color: $error-color;
-    }
-  }
-  tr.type-event {
-    .icon {
-      color: $event-color;
-    }
-  }
-  th, td {
-    font-size: .9em;
-    &.vcenter {
-      vertical-align: middle;
-    }
   }
 }
 
@@ -78,23 +54,6 @@ h1, h2, h3, h4, h5, h6 {
   font-size: .8em;
   ul li {
     cursor: pointer;
-  }
-}
-
-.tracking-details {
-  table {
-    font-size: .9em;
-  }
-  .tracking-data {
-    padding: 1em 1.5em 1.5em;
-    font-size: 2em;
-    font-family: 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, sans-serif;
-  }
-  &.error .tracking-data {
-    color: $error-color;
-  }
-  &.event .tracking-data {
-    color: $event-color;
   }
 }
 

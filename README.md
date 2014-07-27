@@ -1,6 +1,8 @@
 # Sherlog.js
 A client-side error and event tracker application.
 
+**ATTENTION:** This project is under heavy development. Things may break until the stable release.
+
 ## Prerequisites
   - Node
   - Npm

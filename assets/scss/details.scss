@@ -1,0 +1,16 @@
+#page-details {
+  table {
+    font-size: .9em;
+  }
+  .tracking-data {
+    padding: 1em 1.5em 1.5em;
+    font-size: 2em;
+    font-family: 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, sans-serif;
+  }
+  &.error .tracking-data {
+    color: $error-color;
+  }
+  &.event .tracking-data {
+    color: $event-color;
+  }
+}

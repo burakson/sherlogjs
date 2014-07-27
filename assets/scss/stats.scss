@@ -1,0 +1,24 @@
+#page-stats {
+  th {
+    @extend %HelveticaNeueLight;
+    &.date-header {
+      padding-right: 20px;
+    }
+  }
+  tr.type-error {
+    .icon {
+      color: $error-color;
+    }
+  }
+  tr.type-event {
+    .icon {
+      color: $event-color;
+    }
+  }
+  th, td {
+    font-size: .9em;
+    &.vcenter {
+      vertical-align: middle;
+    }
+  }
+}

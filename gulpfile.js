@@ -14,7 +14,7 @@ gulp.task('scripts', function() {
 });
 
 gulp.task('sass', function() {
-  return gulp.src('assets/css/*.scss')
+  return gulp.src('assets/scss/sherlog.scss')
              .pipe(sass({ outputStyle: 'compressed' }))
              .pipe(rename({ suffix: '.min'}))
              .pipe(gulp.dest('public/css'));
