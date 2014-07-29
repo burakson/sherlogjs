@@ -57,7 +57,9 @@ exports.stringify = function(obj) {
     agg.push(matcher);
   }
 
-  agg.push({ $sort: { created_at : 1 }},
+  agg.push(
+    { $match: { type: { $in: [ 0, 1 ] } }},
+    { $sort: { created_at : 1 }},
     { $group: {
         _id: {
           tracking_data   : '$tracking_data',

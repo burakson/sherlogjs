@@ -9,24 +9,14 @@
   <h2>Custom Event Example</h2>
   <p>This page will send tracking event when the page is loaded.</p>
 
+  <script data-environment="production" src="../public/js/sherlog.min.js"></script>
   <script>
-    // Snippet below will fire a custom event with the following object properties.
-    window._sherlogLoaded = function() {
-      var user_details = {
-        username : 'John Doe',
-        age : 30,
-        genre : 'f'
-      }
-      _sherlog.push( user_details, 'production' );
-    };
-
-    (function (doc, win, scr){
-      if (doc.getElementById( scr )) return;
-      var f  = doc.getElementsByTagName(scr)[0];
-      var js = doc.createElement(scr); js.id = 'sherlog';
-      js.src = '../public/js/sherlog.min.js';
-      f.parentNode.insertBefore(js, f);
-    }(document, window, 'script'));
+    var user_details = {
+      username : 'John Doe',
+      age : 30,
+      genre : 'f'
+    }
+    _sherlog.push( user_details );
   </script>
 </body>
 </html>

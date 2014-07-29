@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Ajax Example</title>
+</head>
+<body>
+
+  <h2>Custom Event Example</h2>
+  <p>This page will send ajax tracking error when the request is completed.</p>
+
+  <script data-environment="development" src="../public/js/sherlog.min.js"></script>
+  <script>
+    var url = 'api/user';
+    var oReq = new XMLHttpRequest();
+    oReq.open("GET", url, true);
+    oReq.send();
+  </script>
+</body>
+</html>

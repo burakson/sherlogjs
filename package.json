@@ -1,6 +1,6 @@
 {
   "name": "Sherlog.js",
-  "description": "Client-side error and event tracker",
+  "description": "Javascript error and event tracker application.",
   "version": "0.1.0",
   "license": "MIT",
   "repository": {

@@ -1,6 +1,6 @@
 /**
  * Sherlog.js
- * Client-side error and event tracker application.
+ * Javascript error and event tracker application.
  *
  * Copyright (c) 2014 Burak Son
  * http://github.com/burakson/sherlogjs/LICENSE.md
