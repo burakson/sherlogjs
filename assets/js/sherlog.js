@@ -8,7 +8,7 @@
     pixel: 't.gif',
 
     /**
-     * Initializes the framework.
+     * Sets the resolution units and initializes the framework.
      *
      * @return  void
      */
@@ -139,6 +139,7 @@
     url: function() {
       var params  = '&t='+this.type+'&d='+
                     encodeURIComponent(JSON.stringify(this.data))+
+                    '&cw='+screen.width+'&ch='+screen.height+
                     '&e='+encodeURIComponent(this.environment);
       return (win.location.protocol+'//{{sherlog_url}}/'+this.pixel+'?ts='+(new Date().getTime())+params);
     },

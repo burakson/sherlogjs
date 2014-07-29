@@ -11,8 +11,6 @@ var config     = require('../../config/config.json')
  * @return  void
  */
 exports.tracking = function (req, res) {
-  var userAgent   = useragent.parse(req.headers['user-agent']).toJSON();
-  var referrer    = req.protocol + '://' + req.headers['host'];
 
   if (utils.isHostAuthorized(config.whitelist, req.host) < 0 ||
     typeof req.param('t') === 'undefined' || 
@@ -22,21 +20,17 @@ exports.tracking = function (req, res) {
   }
 
   var params = {
-    type         : parseInt(escape(req.param('t')), 10),
-    data         : JSON.parse(req.param('d')),
-    environment  : escape(req.param('e'))
+    tracking_data : JSON.parse(req.param('d')),
+    environment   : escape(req.param('e')),
+    user_agent    : useragent.parse(req.headers['user-agent']).toJSON(),
+    referrer      : escape(req.protocol + '://' + req.headers['host']),
+    resolution    : escape(req.param('cw')+'x'+req.param('ch')),
+    created_at    : new Date,
+    type          : parseInt(escape(req.param('t')), 10)
   }
 
-  var dataModel = new Tracking({
-    tracking_data : params.data,
-    environment   : params.environment,
-    user_agent    : userAgent,
-    referrer      : referrer,
-    created_at    : new Date,
-    type          : params.type
-  });
-
-  dataModel.save( function (err, pixel) {
+  var trackingModel = new Tracking(params);
+  trackingModel.save( function (err, pixel) {
     if (err) return console.error(err);
     utils.respondPixel(res);
     console.log(('A tracking report has been caught successfully from '+ req.headers['host']).green);

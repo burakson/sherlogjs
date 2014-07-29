@@ -5,6 +5,7 @@ var trackingSchema = mongoose.Schema({
   environment: String,
   user_agent: Object,
   referrer: String,
+  resolution: String,
   created_at: Date,
   type: Number
 }, { collection: 'tracking' });
