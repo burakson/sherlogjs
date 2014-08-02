@@ -25,9 +25,13 @@ $ npm install && bower install
 ## Configuration & Usage
 - Open `config/config.json` and configure the application
 - Hit `gulp` to prepare the framework
-- Start the server: `$ node server.js`
-- Add the framework's script into your web document before any `<script>` tag
-    ```<script src="sherlog.min.js" data-environment="production"></script>````
+- Start the server:
+
+  ```$ node server.js```
+- Add framework's script into your web document before any `<script>` tag
+```
+<script src="sherlog.min.js" data-environment="production"></script>
+```
 - Done! Sherlog is now tracking errors.
 
 #### API
