@@ -16,7 +16,6 @@
     "password"     : "root"  
   },
   "pixel_name"     : "t.gif",
-  "response_timeout" : 3000,
   "whitelist"      : [
     "localhost",
     "mydomain.com"
