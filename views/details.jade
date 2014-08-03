@@ -2,45 +2,78 @@ extends partials/layout
 
 block content
   #content
-    hr
-    div(id="page-details", class="#{item.type}")
+    div(id="page-details", class="#{item.type} clearfix")
       .row
         .col-md-12.tracking-data
-          .item-title.text-center
-            span(class="glyphicon #{item.type === 'error' ? 'glyphicon-warning-sign' : 'glyphicon-pushpin'}")
-            span.data(style="margin-left: .5em; vertical-align: text-bottom;")
-              = item.title
-      .row
-        .col-md-8
-          h4= "Details"
-          table.table.table-bordered
-            tbody
-              if item.type === 'error'
+          h2
+            include partials/_types
+            = item.title
+
+          .summary
+            table.table
+              tbody
                 tr
                   td
-                    = "Error:"
-                  td= item.tracking_data.message
-                tr
-                  td= "Source:"
-                  td= item.tracking_data.source
-                tr
-                  td= "Line:"
-                  td= item.tracking_data.line
-              tr
-                td= "Environment:"
-                td= item.environment
-              tr
-                td= "Referrer domain:"
-                td
-                  a(href="#{item.referrer}", target="_blank")
-                    = item.referrer
+                    span.highlight= occurence_count
+                    = occurence_count > 1 ? " occurences" : " occurence"
+                  td.text-center
+                    = "Environment: "
+                    span.highlight= item.environment
+                  td.text-right
+                    = "Last occurence at "
+                    span.highlight.last-occurence= last_occurence_date
 
-        .col-md-4
+          if item.type === 'error'
+            .jumbotron
+              div
+                span.highlight= "Error Message: "
+                = item.tracking_data.message
+              div
+                span.highlight= "Source: "
+                a(href="#{item.tracking_data.source}", target="_blank")
+                  = item.tracking_data.source
+              div
+                span.highlight= "Line: "
+                = item.tracking_data.line
+          else if item.type === 'xhr'
+            .jumbotron
+              div
+                span.highlight= "Full response: "
+                pre
+                  = JSON.stringify(item.tracking_data.response, undefined, 2)
+              div
+                span.highlight= "Request URL: "
+                = item.tracking_data.url
+              div
+                span.highlight= "Request Method: "
+                = item.tracking_data.method
+              div
+                span.highlight= "Response status: "
+                = item.tracking_data.status
+              div
+                span.highlight= "Response Time: "
+                = Math.floor(item.tracking_data.response_time / 1000 * 10) / 10
+                = " seconds"
+
+        .col-md-12
+          h4= "History"
           table.table.table-bordered.table-striped.data-table.data-table-history
             thead
-              th= 'Occurence History'
+              th= 'Date'
+              th= 'Browser'
+              th= 'Operating System'
+              th= 'Resolution'
+              th= 'Device'
             tbody
               each occurence in history
                 tr
-                  td
+                  td.history-date
                     = occurence.date
+                  td
+                    = occurence.browser
+                  td
+                    = occurence.os
+                  td
+                    = occurence.resolution
+                  td
+                    = occurence.device

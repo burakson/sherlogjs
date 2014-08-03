@@ -13,7 +13,7 @@ exports.respondPixel = function(res) {
   var buffer = new Buffer(35);
   buffer.write('R0lGODlhAQABAIAAAP///wAAACwAAAAAAQABAAACAkQBADs=', 'base64');
   res.send(buffer, {'Content-Type': 'image/gif'}, 200);
-}
+};
 
 /**
  * Checks whether the request's host is whitelisted
@@ -24,7 +24,7 @@ exports.respondPixel = function(res) {
  */
 exports.isHostAuthorized = function(whitelist, host) {
   return _.indexOf(whitelist, host);
-}
+};
 
 /**
  * Converts tracking data to string and adds comma after each pair
@@ -33,11 +33,14 @@ exports.isHostAuthorized = function(whitelist, host) {
  * @return  string
  */
 exports.stringify = function(obj) {
-  if (typeof obj !== 'object') return;
+  if (typeof obj !== 'object') return obj;
   var stringify = _.map(obj, function (value, key) {
-    // _event key is only used when a string is passed on the client's push method
+    // _event key is only used when a string is passed on client's push method
     if(key==='_event') return _.str.capitalize(value)+'';
-    return _.str.capitalize(key)+': '+_.str.capitalize(value);
+    if(typeof value === 'object') {
+      value = JSON.stringify(obj, undefined, 4);
+    }
+    return _.str.capitalize(key)+': '+value;
   });
   return _.str.toSentence(stringify, ', ', ', ');
 };
@@ -49,16 +52,16 @@ exports.stringify = function(obj) {
  * @param   data        obj
  * @return  array
  */
- exports.aggregate = function(type) {
+exports.aggregate = function(type) {
   var agg     = [];
-  var matcher = { $match: { 'type': type } };
 
   if (type !== constants.tracking_types['all']) {
+    var types = type === 1 ? [ 1 ] : [ 0, 2 ];
+    var matcher = { $match: { type: { $in: types } }};
     agg.push(matcher);
   }
 
   agg.push(
-    { $match: { type: { $in: [ 0, 1 ] } }},
     { $sort: { created_at : 1 }},
     { $group: {
         _id: {
@@ -73,4 +76,18 @@ exports.stringify = function(obj) {
     })
 
   return agg;
- }
+};
+
+/**
+ * Escapes forbidden characters.
+ *
+ * @param   str         string
+ * @return  string
+ */
+exports.escape = function(str) {
+  return String(str).replace(/&/g, '&amp;')
+                     .replace(/"/g, '&quot;')
+                     .replace(/'/g, '&#39;')
+                     .replace(/</g, '&lt;')
+                     .replace(/>/g, '&gt;');
+};

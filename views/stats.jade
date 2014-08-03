@@ -3,23 +3,24 @@ extends partials/layout
 block content
   #content
     #page-stats
-      table.table.table-striped.table-bordered.table-hover.data-table.data-table-stats
+      table.table.table-striped.table-hover.data-table.data-table-stats
         thead
           tr
             th.text-center.no-sorting Type
-            th.no-sorting Event/Error Information
-            th.text-center Occurrence
+            th.no-sorting Event/Error Summary
+            th.text-center Occurrences
             th.text-center Environment
             th.text-right.date-header Last Occurence Date
         tbody
           each item in data
             tr(class="type-#{ item.type }")
-              td(class="vcenter text-center icon")
-                span(class="glyphicon #{item.type === 'error' ? 'glyphicon-warning-sign' : 'glyphicon-pushpin'}")
+              td(class="vcenter text-center type")
+                include partials/_types
+
               td(class="tracking-data")
                 a(href="/dashboard/details/#{item.id}")
                   = item.tracking_data
-              td(class="text-center occurence-count")
+              td(class="text-center occurences")
                 = item.occurence
               td(class="text-center environment")
                 = item.environment

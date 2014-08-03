@@ -5,20 +5,21 @@
       padding-right: 20px;
     }
   }
-  tr.type-error {
-    .icon {
-      color: $error-color;
-    }
-  }
-  tr.type-event {
-    .icon {
-      color: $event-color;
-    }
-  }
   th, td {
-    font-size: .9em;
     &.vcenter {
       vertical-align: middle;
+    }
+    &.type {
+      width: 50px;
+    }
+    &.occurences {
+      width: 110px;
+    }
+    &.environment {
+      width: 110px;
+    }
+    &.date {
+      width: 180px;
     }
   }
 }

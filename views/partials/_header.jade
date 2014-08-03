@@ -1,12 +1,30 @@
 if isAuthenticated && route
   #header
-    a.site-title(href="/dashboard")= site_title
+    .navbar.navbar-default.navbar-static-top(role="navigation")
+      .container
+        .navbar-header
+          button(data-target=".nav-collapse", data-toggle="collapse", class="navbar-toggle", type="button")
+            span.sr-only
+              = "Toggle navigation"
+            span.icon-bar
+            span.icon-bar
+            span.icon-bar
+          a(class="navbar-brand" href="/dashboard")
+            = site_title
 
-  #navigation
-    .btn-group
-      a(href="/dashboard", class="btn #{ route === 'all' ? 'btn-primary' : 'btn-default' }")
-        = "All"
-      a(href="/dashboard/events", class="btn #{ route === 'events' ? 'btn-primary' : 'btn-default' }")
-        = "Events"
-      a(href="/dashboard/errors", class="btn #{ route === 'errors' ? 'btn-primary' : 'btn-default' } btn-default")
-        = "Errors"
+
+        .navbar-collapse.collapse
+          if isAuthenticated && route
+            ul.nav.navbar-nav.navbar-right
+              li(class="#{ route === 'all' ? 'active' : '' }")
+                a(href="/dashboard")
+                  = "home"
+              li(class="#{ route === 'errors' ? 'active' : '' }")
+                a(href="/dashboard/errors")
+                  = "errors"
+              li(class="#{ route === 'events' ? 'active' : '' }")
+                a(href="/dashboard/events")
+                  = "events"
+              li
+                a(href="/logout")
+                  = "logout"

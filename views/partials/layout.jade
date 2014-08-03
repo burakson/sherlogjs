@@ -5,15 +5,14 @@ html
     meta(charset="utf-8")
     meta(name="viewport", content="width=device-width, initial-scale=1")
     link(rel="stylesheet", href="http://fonts.googleapis.com/css?family=Lato:300")
-    link(rel="stylesheet", href="/css/sherlog.min.css")
     link(rel="stylesheet", href="/bower_components/datatables-bootstrap3/BS3/assets/css/datatables.css")
+    link(rel="stylesheet", href="/css/sherlog.min.css")
+
 
   body
     if isAuthenticated
-      include _navbar
-    .container
       include _header
-
+    .container
       block content
 
       include _footer

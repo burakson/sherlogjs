@@ -1,16 +1,52 @@
 #page-details {
-  table {
-    font-size: .9em;
-  }
   .tracking-data {
-    padding: 1em 1.5em 1.5em;
-    font-size: 2em;
-    font-family: 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, sans-serif;
+    color: #575757;
+    @extend %HelveticaNeueLight;
+    h2 {
+      color: #3A3A3A;
+      .label {
+        display: inline-block;
+        margin: .7em .8em 0 0;
+        padding: .3em .6em;
+        font-size: 40%;
+        vertical-align: top;
+      }
+    }
+    .jumbotron {
+      margin-top: 1.5em;
+      font-size: 1.2em;
+    }
+    .summary {
+      table {
+        border: 1px solid #eeeeee;
+        margin: 2em 0;
+        color: #838383;
+        border-collapse: inherit;
+        border-radius: $border-radius-base;
+        > tbody > tr > td {
+          width: 33%;
+          border-top: 0;
+          font-size: 1.2em;
+          padding: 1em;
+          vertical-align: middle;
+        }
+      }
+    }
+    .highlight {
+      color: #383838;
+      @extend %HelveticaNeueUltraLight;
+      &.last-occurence {
+        display: block;
+      }
+      &.url {
+        word-break: break-word;
+      }
+    }
   }
-  &.error .tracking-data {
-    color: $error-color;
-  }
-  &.event .tracking-data {
-    color: $event-color;
+  &.xhr h2 {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    line-height: 1.2em;
   }
 }

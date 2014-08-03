@@ -9,7 +9,17 @@
         span.icon-bar
 
     .navbar-collapse.collapse
-      ul.nav.navbar-nav.navbar-right
-        li
-          a(href="/logout")
-            = "Logout"
+      if isAuthenticated && route
+        ul.nav.navbar-nav.navbar-right
+          li(class="#{ route === 'all' ? 'active' : '' }")
+            a(href="/dashboard")
+              = "Home"
+          li(class="#{ route === 'events' ? 'active' : '' }")
+            a(href="/dashboard/events")
+              = "Events"
+          li(class="#{ route === 'errors' ? 'active' : '' }")
+            a(href="/dashboard/errors")
+              = "Errors"
+          li
+            a(href="/logout")
+              = "Logout"

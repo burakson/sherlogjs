@@ -11,11 +11,13 @@ var _  = require('underscore')
  */
 exports.formatStats = function(data) {
   return _.each(data, _.bind(function (item) {
-    if (item._id) {
-      item.tracking_data = item._id.tracking_data;
-      item.environment = item._id.environment;
+    if (item.type === constants.tracking_types['xhr']) {
+      var p = _.pick(item._id.tracking_data, 'method', 'status', 'url');
+      item.tracking_data = utils.stringify(p);
+    } else {
+      item.tracking_data = item._id.tracking_data.message || utils.stringify(item._id.tracking_data);
     }
-    item.tracking_data  = item.tracking_data.message || utils.stringify(item.tracking_data);
+    item.environment = item._id.environment;
     item.date = this.formatDate(item.created_at);
     item.type = _.invert(constants.tracking_types)[item.type];
   }, this));
@@ -31,12 +33,16 @@ exports.formatStats = function(data) {
 exports.formatHistory = function(data) {
   return _.each(data, _.bind(function (item) {
     if (!item.created_at) return;
+    var ua = useragent.fromJSON(item.user_agent);
+    item.browser = ua.family+' '+ua.major+'.'+ua.minor;
+    item.os = ua.os.toString();
     item.date = this.formatDate(item.created_at);
+    item.device = ua.device.toString();
   }, this));
 };
 
 /**
- * Single result formatter for details page
+ * Single item formatter for details page
  *
  * @param   data        obj
  * @return  obj
@@ -44,31 +50,24 @@ exports.formatHistory = function(data) {
 exports.formatDetails = function(data) {
   var clone = data.toObject();
   if (clone.type === constants.tracking_types['error']) {
-    clone = _error(clone);
+    clone.title = clone.tracking_data.message;
+    clone.line = clone.tracking_data.line;
+    clone.source = clone.tracking_data.source;
   } else if (clone.type === constants.tracking_types['event']) {
-    clone = _event(clone);
+    clone.tracking_data = utils.stringify(clone.tracking_data);
+    clone.title = clone.tracking_data;
+  } else if (clone.type === constants.tracking_types['xhr']) {
+    clone.title = utils.stringify(clone.tracking_data.response);
+    clone.method = clone.tracking_data.method;
+    clone.status = clone.tracking_data.status;
+    clone.url = clone.tracking_data.url;
   }
-  // User Agent Formatting
   clone.type = _.invert(constants.tracking_types)[clone.type];
-  clone.os = useragent.fromJSON(clone.user_agent).os.toString();
-  clone.browser = useragent.fromJSON(clone.user_agent).toAgent();
-  clone.device = useragent.fromJSON(clone.user_agent).device.toString();
-  function _error(error) {
-    error.title = error.tracking_data.message;
-    error.line = error.tracking_data.line;
-    error.source = error.tracking_data.source;
-    return error;
-  }
-  function _event(evt) {
-    evt.tracking_data = utils.stringify(evt.tracking_data);
-    evt.title = evt.tracking_data;
-    return evt;
-  }
   return _.omit(clone, 'created_at', '_id', '__v');
 };
 
 /**
- * Converts date into more human readable format
+ * Converts date into human readable format
  *
  * @param   date   obj
  * @return  string

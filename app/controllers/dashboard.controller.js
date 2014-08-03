@@ -4,17 +4,16 @@ var Tracking      = require('../models/tracking')
   , constants     = require('../common/constants');
 
 /**
- * Fetches data for dashboard interface
+ * Fetches data for stats page
  *
  * @param   req   obj
  * @param   res   obj
  * @return  void
  */
 exports.stats = function (req, res) {
-  var statsType = req.params.type || 'all';
-  var type = constants.tracking_types[statsType]
-             || constants.tracking_types[statsType.slice(0, -1)];
-  var agg  = utils.aggregate(type);
+  var statsType = req.params.type || 'all'
+    , type      = constants.tracking_types[statsType] || constants.tracking_types[statsType.slice(0, -1)]
+    , agg       = utils.aggregate(type);
 
   Tracking.aggregate(agg,
     function (err, result) {

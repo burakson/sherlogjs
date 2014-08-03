@@ -8,6 +8,11 @@
   font-weight: 300;
 }
 
+%HelveticaNeueUltraLight {
+  font-family: "HelveticaNeueUltraLight", "HelveticaNeue-Ultra-Light", "Helvetica Neue Ultra Light", "HelveticaNeue", "Helvetica Neue", Helvetica, sans-serif;
+  font-weight: 300;
+}
+
 %Lato {
   font-family: 'Lato', sans-serif;
   font-weight: 300;
@@ -17,30 +22,30 @@ h1, h2, h3, h4, h5, h6 {
   @extend %HelveticaNeueLight;
 }
 
-#header {
-  display: inline-block;
-  .site-title {
-    display: inline-block;
-    margin: 20px 0 0;
-    color: inherit;
-    font-size: 36px;
-    @extend %Lato;
+.label {
+  &.label-error {
+    background-color: $type-error-color;
+  }
+  &.label-event {
+    background-color: $type-event-color;
+  }
+  &.label-ajax {
+    background-color: $type-ajax-color;
   }
 }
 
-#navigation {
-  float: right;
-  margin-top: 30px;
-}
-
-#content {
-  margin-top: 2em;
+#header {
+  @extend %Lato;
 }
 
 .login {
   label {
     cursor: pointer;
   }
+}
+
+table.table {
+  font-size: .9em;
 }
 
 .dataTables_info {

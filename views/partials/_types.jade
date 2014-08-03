@@ -1,0 +1,9 @@
+if item.type === 'event'
+  span(class="label label-event")
+    = "event"
+else if item.type === 'error'
+  span(class="label label-error")
+    = "error"
+else if item.type === 'xhr'
+  span(class="label label-ajax")
+    = "xhr"
