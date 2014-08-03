@@ -17,7 +17,6 @@ var config       = require('./config/config.json')
   , mongoose     = require('mongoose')
   , mongoStore   = require('connect-mongo')(session)
   , bodyParser   = require('body-parser')
-  , timeout      = require('connect-timeout')
   , colors       = require('colors')
   , routes       = require('./app/routes/routes')
   , app          = express();
@@ -98,7 +97,7 @@ app.get('/logout',                    routes.logout);
 app.get('/dashboard',                 isAuthenticated, routes.dashboard);
 app.get('/dashboard/:type',           isAuthenticated, routes.dashboard);
 app.get('/dashboard/details/:id',     isAuthenticated, routes.details);
-app.get(config.pixel_name,            routes.tracker);
+app.get('/'+ config.pixel_name,       routes.tracker);
 app.post('/login',                    passport.authenticate('local', { successRedirect : '/', failureRedirect : '/login' }));
 app.all('*',                          routes.notfound);
 

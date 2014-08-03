@@ -11,7 +11,7 @@ var config     = require('../../config/config.json')
  * @return  void
  */
 exports.tracking = function (req, res) {
-  if (utils.isHostAuthorized(config.whitelist, req.host) < 0 ||
+  if (utils.isHostAuthorized(config.whitelist, req.hostname) < 0 ||
     typeof req.param('t') === 'undefined' || 
     typeof req.param('d') === 'undefined') {
     utils.respondPixel(res);
@@ -35,5 +35,6 @@ exports.tracking = function (req, res) {
       return console.error(err);
     }
     console.log(('A tracking report has been caught successfully from '+ req.headers['host']).green);
+    utils.respondPixel(res);
   });
 };
