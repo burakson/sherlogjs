@@ -1,3 +1,4 @@
+/* jshint unused: true, laxcomma: true, freeze: true, strict: true */
 (function (win, doc, xhr) {
   'use strict';
 
@@ -42,7 +43,7 @@
       win.onerror = function (m, u, l) {
         self.format([m,u,l], 0);
         self.inject();
-      }
+      };
     },
 
     /**
@@ -80,7 +81,7 @@
             try {
               var res
                 , status = response.target.status.toString()
-                , timeSpan = new Date - _timestamp
+                , timeSpan = new Date() - _timestamp
                 , isError = /^[45]/.test(status.slice(0, -2));
               if (!isError) return;
               try {
@@ -90,12 +91,12 @@
               }
               _self.format([_method, status, res, _url, timeSpan], 2);
               _self.inject();
-            } catch(e){};
+            } catch(e){}
           }
-        }
+        };
         this.addEventListener('readystatechange', cb, false);
         _send.apply(this, arguments);
-      }
+      };
     },
 
 

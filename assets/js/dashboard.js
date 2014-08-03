@@ -1,4 +1,6 @@
+/* jshint unused: true, laxcomma: true, freeze: true, strict: true */
 (function($) {
+  'use strict';
   var dashboard = {
     init: function() {
       this.dataTables = $('.data-table');
@@ -24,7 +26,6 @@
       },this));
     },
     history: function(table) {
-      var sortableColumns = this.sort(table);
       $(table).dataTable({
         sPaginationType: "bs_full",
         bLengthChange: false,
@@ -47,7 +48,7 @@
         }
       });
     }
-  }
+  };
 
   dashboard.init();
 })(jQuery);

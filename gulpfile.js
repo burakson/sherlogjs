@@ -4,11 +4,14 @@ var config  = require('./config/config.json')
   , uglify  = require('gulp-uglify')
   , rename  = require('gulp-rename')
   , replace = require('gulp-replace')
-  , watch   = require('gulp-watch');
+  , watch   = require('gulp-watch')
+  , jshint = require('gulp-jshint');
+
 
 var paths = {
-  js   : 'assets/js/*.js',
-  scss : 'assets/scss/sherlog.scss'
+  js : 'assets/js/*.js',
+  scss : 'assets/scss/sherlog.scss',
+  scssToWatch : 'assets/scss/**/*.scss'
 };
 
 gulp.task('scripts', function() {
@@ -27,9 +30,15 @@ gulp.task('sass', function() {
              .pipe(gulp.dest('public/css'));
 });
 
+gulp.task('lint', function() {
+  return gulp.src(paths.js)
+    .pipe(jshint())
+    .pipe(jshint.reporter('default'));
+});
+
 gulp.task('watch', function() {
     gulp.watch(paths.js,    ['scripts']);
-    gulp.watch('assets/scss/*.scss',  ['sass']);
+    gulp.watch(paths.scssToWatch,  ['sass']);
 });
 
 gulp.task('default', ['scripts', 'sass']);
