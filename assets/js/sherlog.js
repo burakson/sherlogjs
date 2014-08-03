@@ -2,10 +2,6 @@
   'use strict';
 
   var Sherlog = {
-    /*
-     * Name of the tracking pixel
-     */
-    pixel: 't.gif',
 
     /**
      * Sets the resolution units and initializes the framework.
@@ -25,8 +21,8 @@
      * @return  void
      */
     environment: function() {
-      var s = doc.getElementsByTagName('script');
-      var env;
+      var s = doc.getElementsByTagName('script')
+        , env;
       for(var i = 0, l = s.length; i < l; i++){
         if(s[i].src.indexOf('sherlog') > -1){
           env = s[i].getAttribute('data-environment');
@@ -65,10 +61,10 @@
      * @return  void
      */
     xhr: function() {
-      var _self = this;
-      var _open = xhr.prototype.open;
-      var _send = xhr.prototype.send;
-      var _method, _url, _timestamp;
+      var _self = this
+        , _open = xhr.prototype.open
+        , _send = xhr.prototype.send
+        , _method, _url, _timestamp;
 
       xhr.prototype.open = function(method, url) {
         _timestamp = new Date();
@@ -82,10 +78,10 @@
         var cb = function(response) {
           if(self.readyState == 4) {
             try {
-              var res;
-              var status = response.target.status.toString();
-              var timeSpan = new Date - _timestamp;
-              var isError = /^[45]/.test(status.slice(0, -2));
+              var res
+                , status = response.target.status.toString()
+                , timeSpan = new Date - _timestamp
+                , isError = /^[45]/.test(status.slice(0, -2));
               if (!isError) return;
               try {
                 res = JSON.parse(response.target.response);
@@ -141,7 +137,7 @@
                     encodeURIComponent(JSON.stringify(this.data))+
                     '&cw='+screen.width+'&ch='+screen.height+
                     '&e='+encodeURIComponent(this.environment);
-      return (win.location.protocol+'//{{sherlog_url}}/'+this.pixel+'?ts='+(new Date().getTime())+params);
+      return (win.location.protocol+'//{{sherlog_url}}/{{pixel_name}}?ts='+(new Date().getTime())+params);
     },
 
     /**

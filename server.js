@@ -83,7 +83,7 @@ app.use(timeout(config.response_timeout));
 app.use(express.static(__dirname + '/public'));
 app.use('/bower_components', express.static(__dirname + '/bower_components'));
 app.set('view engine', 'jade');
-app.set('views', __dirname + '/views');
+app.set('views', __dirname + '/app/views');
 app.set('showStackError', true);
 
 app.use(function (req, res, next){
@@ -99,7 +99,7 @@ app.get('/logout',                    routes.logout);
 app.get('/dashboard',                 isAuthenticated, routes.dashboard);
 app.get('/dashboard/:type',           isAuthenticated, routes.dashboard);
 app.get('/dashboard/details/:id',     isAuthenticated, routes.details);
-app.get('/t.gif',                     routes.tracker);
+app.get(config.pixel_name,            routes.tracker);
 app.post('/login',                    passport.authenticate('local', { successRedirect : '/', failureRedirect : '/login' }));
 app.all('*',                          routes.notfound);
 

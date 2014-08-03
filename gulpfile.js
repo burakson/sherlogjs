@@ -14,6 +14,7 @@ var paths = {
 gulp.task('scripts', function() {
   return gulp.src(paths.js)
              .pipe(replace('{{sherlog_url}}', config.server_url))
+             .pipe(replace('{{pixel_name}}',  config.pixel_name))
              .pipe(uglify())
              .pipe(rename({suffix: '.min'}))
              .pipe(gulp.dest('public/js'));
