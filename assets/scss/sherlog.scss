@@ -1,7 +1,7 @@
 @import "components/vars.scss";
 @import "components/stats.scss";
 @import "components/details.scss";
-@import "../../bower_components/bootstrap-sass-twbs/vendor/assets/stylesheets/bootstrap.scss";
+@import "components/imports.scss";
 
 %HelveticaNeueLight {
   font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, sans-serif;
@@ -19,10 +19,12 @@
 }
 
 h1, h2, h3, h4, h5, h6 {
-  @extend %HelveticaNeueLight;
+  @extend %Lato;
 }
 
 .label {
+  @extend %HelveticaNeueLight;
+  font-weight: bold;
   &.label-error {
     background-color: $type-error-color;
   }
