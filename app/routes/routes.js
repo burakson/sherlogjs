@@ -1,28 +1,34 @@
-module.exports.login = function (req, res) {
-  res.render('login');
-}
+var modules = {
 
-module.exports.logout = function (req, res) {
-  req.logout();
-  res.redirect('/');
-}
+  index: function(req, res) {
+    res.redirect('/dashboard');
+  },
 
-module.exports.index = function(req, res) {
-  res.redirect('/dashboard');
+  login: function (req, res) {
+    res.render('login');
+  },
+
+  logout: function (req, res) {
+    req.logout();
+    res.redirect('/');
+  },
+
+  tracker: function (req, res) {
+    require('../controllers/tracking.controller').tracking(req, res);
+  },
+
+  dashboard: function (req, res) {
+    require('../controllers/dashboard.controller').stats(req, res);
+  },
+
+  details: function (req, res) {
+    require('../controllers/details.controller').details(req, res);
+  },
+
+  notfound: function (req, res) {
+    res.render('error');
+  }
+
 };
 
-module.exports.tracker = function (req, res) {
-  require('../controllers/tracking.controller').tracking(req, res);
-};
-
-module.exports.dashboard = function (req, res) {
-  require('../controllers/dashboard.controller').stats(req, res);
-}
-
-module.exports.details = function (req, res) {
-  require('../controllers/details.controller').details(req, res);
-}
-
-module.exports.notfound = function (req, res) {
-  res.render('error');
-}
+module.exports = modules;
