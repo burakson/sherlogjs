@@ -21,8 +21,8 @@ block content
                 a(href="/dashboard/details/#{item.id}")
                   = item.tracking_data
               td(class="text-center occurences")
-                = item.occurence
+                = item.total_occurence
               td(class="text-center environment")
                 = item.environment
               td(class="text-right date")
-                = item.date
+                = item.last_occurence

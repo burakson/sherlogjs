@@ -46,39 +46,6 @@ exports.stringify = function(obj) {
 };
 
 /**
- * Prepares an aggregation array to group events and errors
- *
- * @param   res         obj
- * @param   data        obj
- * @return  array
- */
-exports.aggregate = function(type) {
-  var agg     = [];
-
-  if (type !== constants.tracking_types['all']) {
-    var types = type === 1 ? [ 1 ] : [ 0, 2 ];
-    var matcher = { $match: { type: { $in: types } }};
-    agg.push(matcher);
-  }
-
-  agg.push(
-    { $sort: { created_at : 1 }},
-    { $group: {
-        _id: {
-          tracking_data   : '$tracking_data',
-          environment     : '$environment'
-        },
-        id          : { $last: '$_id' },
-        type        : { $last: '$type' },
-        created_at  : { $last: '$created_at' },
-        occurence   : { $sum: 1 }
-      }
-    })
-
-  return agg;
-};
-
-/**
  * Escapes forbidden characters.
  *
  * @param   str         string
@@ -90,4 +57,14 @@ exports.escape = function(str) {
                      .replace(/'/g, '&#39;')
                      .replace(/</g, '&lt;')
                      .replace(/>/g, '&gt;');
+};
+
+/**
+ * Renders error page.
+ *
+ * @param   res         obj
+ * @return  void
+ */
+exports.errorPage = function(res) {
+  res.render('error');
 };

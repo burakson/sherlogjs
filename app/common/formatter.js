@@ -12,13 +12,13 @@ var _  = require('underscore')
 exports.formatStats = function(data) {
   return _.each(data, _.bind(function (item) {
     if (item.type === constants.tracking_types['xhr']) {
-      var p = _.pick(item._id.tracking_data, 'method', 'status', 'url');
+      var p = _.pick(item.tracking_data, 'method', 'status', 'url');
       item.tracking_data = utils.stringify(p);
     } else {
       item.tracking_data = item._id.tracking_data.message || utils.stringify(item._id.tracking_data);
     }
-    item.environment = item._id.environment;
-    item.date = this.formatDate(item.created_at);
+    item.environment = item.environment || item._id.environment;
+    item.last_occurence = this.formatDate(item.last_occurence);
     item.type = _.invert(constants.tracking_types)[item.type];
   }, this));
 };

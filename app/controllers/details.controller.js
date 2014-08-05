@@ -6,7 +6,7 @@ var Tracking      = require('../models/tracking')
   , constants     = require('../common/constants');
 
 /**
- * Tracking details
+ * Fetches single tracking details along with its occurences.
  *
  * @param   req   obj
  * @param   res   obj
@@ -14,51 +14,39 @@ var Tracking      = require('../models/tracking')
  */
 exports.details = function (req, res) {
   var id           = req.params.id
-    , trackingData = {};
+    , trackingData = {}
+    , type;
 
-  if(!id) return returnError();
-
-  function returnError() {
-    res.render('error');
-  }
+  if(!id) return utils.errorPage();
 
   async.series({
-      item: function (callback) {
+      item: function (cb) {
         return Tracking.findOne({_id : id}, function (err, result) {
-          if (err || result === null)
-          {
-            returnError();
-            return;
-          }
+          if (err || result === null) return utils.errorPage();
           trackingData = result.tracking_data;
-          return callback(null, result);
+          type = result.type;
+          return cb(null, result);
         });
       },
-      browsers: function(callback) {
-        return Tracking.aggregate([
-          { $match: { 'tracking_data': trackingData } },
-          { $sort: { created_at : 1 }},
-          { $group: {
-              _id: {
-                user_agent: '$user_agent'
-              },
-              sum: { $sum: 1 }
-            }
+      history: function (cb) {
+        var query = {};
+        if (type === 2) {
+          query = {
+            'tracking_data.response' : trackingData.response,
+            'tracking_data.method'   : trackingData.method,
+            'tracking_data.status'   : trackingData.status
           }
-        ], function (err, results) {
-          if (err) returnError();
-          return callback(null, results);
-        });
-      },
-      history: function (callback) {
-        return Tracking.find({ tracking_data: trackingData }, { 'user_agent': 1, 'created_at': 1, 'resolution': 1 }, function (err, results) {
-          if (err) returnError();
-          return callback(null, results);
+        } else {
+          query = { tracking_data: trackingData }
+        }
+        return Tracking.find(query, { 'user_agent': 1, 'created_at': 1, 'resolution': 1 }, function (err, results) {
+          if (err) utils.errorPage();
+          return cb(null, results);
         });
       }
     }, function (err, results){
       var route;
-      if (err) returnError();
+      if (err) utils.errorPage();
       if (results.item.type === constants.tracking_types['xhr'] ||
           results.item.type === constants.tracking_types['error']) {
         route = 'errors'
@@ -67,7 +55,6 @@ exports.details = function (req, res) {
       }
       res.render('details', {
         item                : formatter.formatDetails(results.item),
-        browsers            : results.browsers,
         history             : formatter.formatHistory(results.history),
         occurence_count     : results.history.length,
         last_occurence_date : formatter.formatDate(results.history.slice(-1)[0].created_at),
