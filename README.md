@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="https://github.com/burakson/sherlogjs/blob/images/sherlog-logo.png?raw=true" alt="Sherlogjs"/>
+</p>
+
 # Sherlog.js
 Javascript error and event tracker application.
 
