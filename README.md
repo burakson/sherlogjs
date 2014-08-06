@@ -1,14 +1,12 @@
 # Sherlog.js
 Javascript error and event tracker application.
 
-***ATTENTION:*** *This project is under heavy development. Things may break until the stable release.*
-
 ## Features
   - Tracks javascript errors
   - Tracks erroneous ajax requests
   - Tracks custom events
-  - Advanced Reporting Dashboard
-  - Lightweight framework (~2KB Minified)
+  - Reporting dashboard
+  - Lightweight tracking framework (~2KB Minified)
 
 ## Prerequisites
   - Node
@@ -28,14 +26,14 @@ $ npm install && bower install
 - Start the server:
 
   ```$ node server.js```
-- Add framework's script into your web document before any `<script>` tag
+- Add the following script into your web document before any `<script>` tag
 ```
 <script src="sherlog.min.js" data-environment="production"></script>
 ```
 - Done! Sherlog is now tracking errors.
 
 #### API
-Sherlog provides a public method as shown in the below examples.
+Sherlog provides a public method for event tracking as shown in the below examples.
 
 ```
 _sherlog.push( String/Object , callback )
@@ -49,14 +47,14 @@ _sherlog.push({
     age: 35,
     action: 'Clicked on an image'
 }, function() {
-    // event tracking is done.
+    // event tracking pixel is fired.
 });
 ```
 
 **Example 2:**
 ```javascript
-_sherlog.push('User visits About us page.', function() {
-    // event tracking is done.
+_sherlog.push('User has clicked to the button', function() {
+    // event tracking pixel is fired.
 });
 ```
 
