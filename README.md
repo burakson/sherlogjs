@@ -17,6 +17,11 @@ Javascript error and event tracker application.
   - Npm
   - MongoDB
 
+## Screenshots
+![Dashboard Page](https://github.com/burakson/sherlogjs/blob/images/screenshot1.png?raw=true "Dashboard Page")
+![Tracking Details Page](https://github.com/burakson/sherlogjs/blob/images/screenshot2.png?raw=true "Details Page")
+
+
 ## Installation
 ```
 $ git clone git://github.com/burakson/sherlogjs.git
