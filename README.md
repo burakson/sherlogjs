@@ -1,13 +1,13 @@
-<p align="center">
-  <img src="https://github.com/burakson/sherlogjs/blob/images/sherlog-logo.png?raw=true" alt="Sherlogjs"/>
+<p style="text-align: center">
+  <img src="https://github.com/burakson/sherlogjs/blob/images/sherlog-logo.png?raw=true" alt="Sherlogjs">
 </p>
 
 # Sherlog.js
-Javascript error and event tracker application.
+JavaScript error and event tracker application.
 
 ## Features
-  - Tracks javascript errors
-  - Tracks erroneous ajax requests
+  - Tracks JavaScript errors
+  - Tracks faulty ajax requests
   - Tracks custom events
   - Reporting dashboard
   - Lightweight tracking framework (~2KB Minified)
@@ -15,6 +15,8 @@ Javascript error and event tracker application.
 ## Prerequisites
   - Node
   - Npm
+  - Bower
+  - Gulp
   - MongoDB
 
 ## Screenshots
@@ -30,12 +32,12 @@ $ npm install && bower install
 ```
 
 ## Configuration & Usage
-- Open `config/config.json` and configure the application
+- Copy `config/config.json.example` in `config/config.json` and configure the application
 - Hit `gulp` to prepare the framework
 - Start the server:
 
-  ```$ node server.js```
-- Add the following script into your web document before any `<script>` tag
+  ```$ npm start```
+- Add the following script into your web document before any other `<script>` tag
 ```
 <script src="sherlog.min.js" data-environment="production"></script>
 ```
@@ -50,7 +52,7 @@ _sherlog.push( String/Object , callback )
 
 **Example 1:**
 
-```javascript
+```JavaScript
 _sherlog.push({
     username: 'John Doe',
     age: 35,
@@ -61,7 +63,7 @@ _sherlog.push({
 ```
 
 **Example 2:**
-```javascript
+```JavaScript
 _sherlog.push('User has clicked to the button', function() {
     // event tracking pixel is fired.
 });

@@ -11,9 +11,9 @@
   "server_url"     : "localhost:3000",
   "database": {
     "host"         : "localhost",
-    "db_name"      : "test",
-    "username"     : "root",
-    "password"     : "root"  
+    "db_name"      : "tracking_test",
+    "username"     : "your username",
+    "password"     : "your password"
   },
   "pixel_name"     : "t.gif",
   "whitelist"      : [
