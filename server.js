@@ -27,7 +27,8 @@ var db = mongoose.connect(
     user: config.database.user,
     pass: config.database.pw })
   .connection.on('error', function() {
-    console.log('Could not connect to the database!'.red);
+    console.log('Could not connect to the database! Exiting.'.red);
+    process.exit(1);
   });
 
 // ensure that bower packages are installed
@@ -55,14 +56,16 @@ passport.deserializeUser(function (user, done) {
 });
 
 passport.use( new Strategy(function (username, password, done) {
-  var hasAccess = username == config.credentials.username &&
-                  password == config.credentials.password;
+  var hasAccess = (username == config.credentials.username &&
+                   password == config.credentials.password);
 
   done(null, hasAccess);
 }));
 
 var isAuthenticated = function(req, res, next) {
-  if (req.isAuthenticated()) return next();
+  if (req.isAuthenticated()) {
+    return next();
+  }
   res.redirect('/login');
 };  
 
