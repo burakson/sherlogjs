@@ -1,4 +1,4 @@
-<p style="text-align: center">
+<p align="center">
   <img src="https://github.com/burakson/sherlogjs/blob/images/sherlog-logo.png?raw=true" alt="Sherlogjs">
 </p>
 
