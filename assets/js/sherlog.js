@@ -17,7 +17,7 @@
 
     /**
      * Sets the environment from the "data-environment" attribute of corresponding script tag.
-     * NOTE: It will only find the attribute when framework's source contains 'sherlog' keyword.
+     * NOTE: It will only find the attribute when the framework's source contains 'sherlog' keyword.
      *
      * @return  void
      */
@@ -39,10 +39,10 @@
      * @return  void
      */
     error: function() {
-      var self = this;
+      var _this = this;
       win.onerror = function (m, u, l) {
-        self.format([m,u,l], 0);
-        self.inject();
+        _this.format([m,u,l], 0);
+        _this.inject();
       };
     },
 
@@ -163,9 +163,9 @@
       img.parentNode.removeChild(img);
     }
 
-  },
+  };
 
-  Public = {
+  var Public = {
     /**
      * Public method for event tracker,  sends callback when the process is done.
      *
@@ -179,13 +179,15 @@
       }
       try {
         Sherlog.event(data);
-        cb.call(this);
+        // Uses the default context for this.
+        // We don't have anything to expose to the user, so we don't pass `this` as the callback context
+        cb.call(null);
       } catch(e) {}
     }
   };
 
   Sherlog.init();
 
-  win._sherlog = win._sherlog || Public;
+  win.Sherlog = win.Sherlog || Public;
 
 }(window, document, XMLHttpRequest));

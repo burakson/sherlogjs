@@ -47,13 +47,13 @@ $ npm install && bower install
 Sherlog provides a public method for event tracking as shown in the below examples.
 
 ```
-_sherlog.push( String/Object , callback )
+Sherlog.push( String/Object , callback )
 ```
 
 **Example 1:**
 
-```JavaScript
-_sherlog.push({
+```javascript
+Sherlog.push({
     username: 'John Doe',
     age: 35,
     action: 'Clicked on an image'
@@ -63,8 +63,8 @@ _sherlog.push({
 ```
 
 **Example 2:**
-```JavaScript
-_sherlog.push('User has clicked to the button', function() {
+```javascript
+Sherlog.push('User has clicked to the button', function() {
     // event tracking pixel is fired.
 });
 ```
