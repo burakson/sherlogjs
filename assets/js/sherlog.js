@@ -24,8 +24,8 @@
     environment: function() {
       var s = doc.getElementsByTagName('script')
         , env;
-      for(var i = 0, l = s.length; i < l; i++){
-        if(s[i].src.indexOf('sherlog') > -1){
+      for( var i = 0, l = s.length; i < l; i++) {
+        if (s[i].src.indexOf('sherlog') > -1) {
           env = s[i].getAttribute('data-environment');
           break;
         }
@@ -77,13 +77,15 @@
       xhr.prototype.send = function() {
         var self = this;
         var cb = function(response) {
-          if(self.readyState == 4) {
+          if (self.readyState == 4) {
             try {
               var res
                 , status = response.target.status.toString()
                 , timeSpan = new Date() - _timestamp
                 , isError = /^[45]/.test(status.slice(0, -2));
-              if (!isError) return;
+              if (!isError) {
+                return;
+              }
               try {
                 res = JSON.parse(response.target.response);
               } catch(e) {
@@ -109,22 +111,29 @@
      */
     format: function(data, type) {
       this.type = type;
-      if (this.type === 0) {
-        this.data = {
-          message : data[0],
-          source  : data[1],
-          line    : data[2]
-        };
-      } else if (this.type === 1 ) {
-        this.data = (typeof data !== 'object') ? { _event : data } : data;
-      } else if (this.type === 2 ) {
-        this.data = {
-          method        : data[0],
-          status        : data[1],
-          response      : data[2],
-          url           : data[3],
-          response_time : data[4]
-        };
+
+      switch (this.type) {
+        case 0:
+          this.data = {
+            message : data[0],
+            source  : data[1],
+            line    : data[2]
+          };
+          break;
+
+        case 1:
+          this.data = (typeof data !== 'object') ? { _event : data } : data;
+          break;
+
+        case 2:
+          this.data = {
+            method        : data[0],
+            status        : data[1],
+            response      : data[2],
+            url           : data[3],
+            response_time : data[4]
+          };
+          break;
       }
     },
 
@@ -134,10 +143,10 @@
      * @return  string
      */
     url: function() {
-      var params  = '&t='+this.type+'&d='+
-                    encodeURIComponent(JSON.stringify(this.data))+
-                    '&cw='+screen.width+'&ch='+screen.height+
-                    '&e='+encodeURIComponent(this.environment);
+      var params  = '&t=' + this.type + '&d=' +
+                    encodeURIComponent(JSON.stringify(this.data)) +
+                    '&cw=' + screen.width + '&ch=' + screen.height +
+                    '&e=' + encodeURIComponent(this.environment);
       return (win.location.protocol+'//{{sherlog_url}}/{{pixel_name}}?ts='+(new Date().getTime())+params);
     },
 
@@ -165,7 +174,9 @@
      * @return  void
      */
     push: function (data, cb) {
-      if (typeof data === 'undefined') return;
+      if (typeof data === 'undefined') {
+        return;
+      }
       try {
         Sherlog.event(data);
         cb.call(this);

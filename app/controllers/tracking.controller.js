@@ -24,9 +24,9 @@ exports.tracking = function (req, res) {
     user_agent    : useragent.parse(req.headers['user-agent']).toJSON(),
     referrer      : utils.escape(req.protocol + '://' + req.headers['host']),
     resolution    : utils.escape(req.param('cw')+ 'x'+ req.param('ch')),
-    created_at    : new Date,
+    created_at    : new Date(),
     type          : parseInt(utils.escape(req.param('t')), 10)
-  }
+  };
 
   var trackingModel = new Tracking(params);
   trackingModel.save( function (err, pixel) {

@@ -27,7 +27,9 @@ exports.stats = function (req, res) {
     errors: function (cb) {
       if (type === -1 || type === 0) {
         return Tracking.aggregate(aggregator.generic(0), function (err, result) {
-          if (err) return utils.errorPage(res);
+          if (err) {
+            return utils.errorPage(res);
+          }
           return cb(null, result);
         });
       } else {
@@ -37,7 +39,9 @@ exports.stats = function (req, res) {
     events: function(cb) {
       if (type === -1 || type === 1) {
         return Tracking.aggregate(aggregator.generic(1), function (err, result) {
-          if (err) return utils.errorPage(res);
+          if (err) {
+            return utils.errorPage(res);
+          }
           return cb(null, result);
         });
       } else {
@@ -47,7 +51,9 @@ exports.stats = function (req, res) {
     xhr: function(cb) {
       if (type === -1 || type === 0) {
         return Tracking.aggregate(aggregator.xhr(), function (err, result) {
-          if (err) return utils.errorPage(res);
+          if (err) {
+            return utils.errorPage(res);
+          }
           return cb(null, result);
         });
       } else {
@@ -56,9 +62,11 @@ exports.stats = function (req, res) {
     }
   },
   function (err, result) {
-    if (err) return res.render('error');
+    if (err) {
+      return res.render('error');
+    }
     var flatten = _.flatten(_.filter(result, function (v) {
-      return v !== null
+      return v !== null;
     }));
 
     res.render('stats', {

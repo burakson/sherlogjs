@@ -11,7 +11,9 @@
      */
     init: function() {
       this.dataTables = $('.data-table');
-      if (this.dataTables.length < 1) return;
+      if (this.dataTables.length < 1) {
+        return;
+      }
       this.setupDataTables();
     },
 
@@ -34,7 +36,7 @@
      *
      * @return  void
      */
-     setupDataTables: function() {
+    setupDataTables: function() {
       $.each( this.dataTables, $.proxy(function (i, table) {
         this.stats(table);
       },this));
@@ -46,7 +48,7 @@
      * @return  void
      */
     stats: function(table) {
-      var columnCount     = $(table).find('th').length;
+      var columnCount = $(table).find('th').length;
       var sortableColumns = this.sort(table);
       $(table).dataTable({
         sPaginationType: "bs_full",
