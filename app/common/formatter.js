@@ -49,18 +49,16 @@ exports.formatHistory = function(data) {
  */
 exports.formatDetails = function(data) {
   var clone = data.toObject();
-  if (clone.type === constants.tracking_types['error']) {
-    clone.title = clone.tracking_data.message;
-    clone.line = clone.tracking_data.line;
-    clone.source = clone.tracking_data.source;
-  } else if (clone.type === constants.tracking_types['event']) {
-    clone.tracking_data = utils.stringify(clone.tracking_data);
-    clone.title = clone.tracking_data;
-  } else if (clone.type === constants.tracking_types['xhr']) {
-    clone.title = utils.stringify(clone.tracking_data.response);
-    clone.method = clone.tracking_data.method;
-    clone.status = clone.tracking_data.status;
-    clone.url = clone.tracking_data.url;
+  switch (clone.type) {
+    case constants.tracking_types['error']:
+      clone.title = clone.tracking_data.message;
+      break;
+    case constants.tracking_types['event']:
+      clone.title = utils.stringify(clone.tracking_data);
+      break;
+    case constants.tracking_types['xhr']:
+      clone.title = utils.stringify(clone.tracking_data.response);
+      break;
   }
   clone.type = _.invert(constants.tracking_types)[clone.type];
   return _.omit(clone, 'created_at', '_id', '__v');

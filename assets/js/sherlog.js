@@ -41,8 +41,9 @@
     error: function() {
       var _this = this;
       win.onerror = function (m, u, l, c, e) {
-        var stack = e ? e.stack : null;
-        _this.format([m,u,l,c,stack], 0);
+        // TODO: Stack trace param (e) will not work in old browsers.
+        var s = e ? e.stack : null;
+        _this.format([m,u,l,c,s], 0);
         _this.inject();
       };
     },

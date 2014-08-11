@@ -40,7 +40,7 @@ block content
                 = item.tracking_data.column
               div
                 span.highlight= "Stack: "
-                  code.stack-trace!= item.tracking_data.stack
+                  pre.stack-trace!= item.tracking_data.stack
           else if item.type === 'xhr'
             .jumbotron
               div
@@ -54,7 +54,7 @@ block content
                 span.highlight= "Request Method: "
                 = item.tracking_data.method
               div
-                span.highlight= "Response status: "
+                span.highlight= "Response Status: "
                 = item.tracking_data.status
               div
                 span.highlight= "Response Time: "
