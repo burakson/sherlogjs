@@ -40,8 +40,9 @@
      */
     error: function() {
       var _this = this;
-      win.onerror = function (m, u, l) {
-        _this.format([m,u,l], 0);
+      win.onerror = function (m, u, l, c, e) {
+        var stack = e ? e.stack : null;
+        _this.format([m,u,l,c,stack], 0);
         _this.inject();
       };
     },
@@ -117,7 +118,9 @@
           this.data = {
             message : data[0],
             source  : data[1],
-            line    : data[2]
+            line    : data[2],
+            column  : data[3],
+            stack   : data[4]
           };
           break;
 

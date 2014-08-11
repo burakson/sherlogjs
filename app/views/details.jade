@@ -35,6 +35,12 @@ block content
               div
                 span.highlight= "Line: "
                 = item.tracking_data.line
+              div
+                span.highlight= "Column: "
+                = item.tracking_data.column
+              div
+                span.highlight= "Stack: "
+                  code.stack-trace!= item.tracking_data.stack
           else if item.type === 'xhr'
             .jumbotron
               div
