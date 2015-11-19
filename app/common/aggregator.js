@@ -33,11 +33,9 @@ exports.xhr = function() {
       { $sort: { created_at : 1 }},
       { $group: {
           _id: {
-            tracking_data : {
-              method : '$method',
-              status : '$status',
-              url : '$url'
-            },
+            url: '$tracking_data.url',
+            method: '$tracking_data.method',
+            status: '$tracking_data.status',
             environment     : '$environment'
           },
           id              : { $last: '$_id' },
